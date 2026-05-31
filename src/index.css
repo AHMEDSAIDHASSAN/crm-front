@@ -1,0 +1,637 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+/*
+  IMPORTANT: `@variant dark` (not @custom-variant) OVERRIDES Tailwind v4's built-in
+  dark variant, which by default uses `@media (prefers-color-scheme: dark)`.
+  Without this override, dark: classes respond to the phone's OS dark mode setting.
+  With this override, dark: classes ONLY fire when <html class="dark"> is present,
+  which is set exclusively by the in-app ThemeToggle (via applyTheme()).
+*/
+@variant dark (&:where(.dark, .dark *));
+
+/* ─────────────────────────────────────────────────────────────
+   Tailwind design-token aliases → CSS custom properties
+───────────────────────────────────────────────────────────── */
+@theme inline {
+  --font-jakarta: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-cairo: "Cairo", ui-sans-serif, system-ui, sans-serif;
+  --font-geist-mono: ui-monospace, monospace;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-jakarta);
+  --font-mono: var(--font-geist-mono);
+  --font-heading: var(--font-sans);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+
+  --radius-sm:  calc(var(--radius) * 0.6);
+  --radius-md:  calc(var(--radius) * 0.8);
+  --radius-lg:  var(--radius);
+  --radius-xl:  calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+
+  /* Sira-dashboard brand palette */
+  --color-sira-gold:              #bf9b30;
+  --color-sira-gold-foreground:   #ffffff;
+  --color-sira-brown:             #0b1828;
+  --color-sira-brown-light:       #f8fafc;
+  --color-sira-brown-dark:        #050d14;
+  --color-sira-green:             #0f766e;
+  --color-sira-dark:              #0b1828;
+  --color-sira-dark-2:            #1e293b;
+  --color-sira-bg-page:           #f8fafc;
+  --color-sira-bg-card:           #ffffff;
+  --color-sira-bg-hover:          #f1f5f9;
+  --color-sira-bg-subtle:         #f1f5f9;
+  --color-sira-text-primary:      #0b1828;
+  --color-sira-text-secondary:    #475569;
+  --color-sira-text-muted:        #64748b;
+  --color-sira-text-inverse:      #ffffff;
+  --color-sira-border:            #e2e8f0;
+  --color-sira-border-md:         #cbd5e1;
+  --color-sira-border-focus:      #bf9b30;
+  --color-sira-badge-new-bg:      #fefce8;
+  --color-sira-badge-new-text:    #a16207;
+  --color-sira-badge-low-bg:      #f8fafc;
+  --color-sira-badge-low-text:    #0b1828;
+  --color-sira-badge-lead-bg:     #ecfdf5;
+  --color-sira-badge-lead-text:   #0f766e;
+
+  --shadow-premium:        0 8px 30px rgb(15 23 42 / 0.06);
+  --shadow-premium-xl:     0 20px 50px rgb(15 23 42 / 0.08);
+  --shadow-premium-brown:  0 12px 40px rgb(11 24 40 / 0.18);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Light theme — SIRA dashboard: soft gray canvas, white chrome, gold accent.
+   color-scheme: light  →  browser renders native controls (inputs, scrollbars,
+   date pickers) in light mode regardless of the OS setting.
+───────────────────────────────────────────────────────────── */
+:root {
+  --radius: 0.75rem;
+
+  --background:            oklch(0.955 0.008 85);
+  --foreground:            oklch(0.18 0.02 85);
+  --card:                  oklch(1 0 0);
+  --card-foreground:       oklch(0.18 0.02 85);
+  --popover:               oklch(1 0 0);
+  --popover-foreground:    oklch(0.18 0.02 85);
+  --primary:               oklch(0.18 0.02 85);
+  --primary-foreground:    oklch(0.99 0 0);
+  --secondary:             oklch(0.62 0.11 78);
+  --secondary-foreground:  oklch(0.99 0 0);
+  --muted:                 oklch(0.94 0.012 85);
+  --muted-foreground:      oklch(0.48 0.02 85);
+  --accent:                oklch(0.96 0.02 78);
+  --accent-foreground:     oklch(0.18 0.02 85);
+  --destructive:           oklch(0.55 0.22 25);
+  --border:                oklch(0.9 0.01 85);
+  --input:                 oklch(0.9 0.01 85);
+  --ring:                  oklch(0.62 0.11 78);
+  --chart-1:               oklch(0.62 0.11 78);
+  --chart-2:               oklch(0.48 0.08 75);
+  --chart-3:               oklch(0.35 0.04 85);
+  --chart-4:               oklch(0.72 0.1 72);
+  --chart-5:               oklch(0.55 0.1 78);
+  --sidebar:               oklch(1 0 0);
+  --sidebar-foreground:    oklch(0.18 0.02 85);
+  --sidebar-primary:       oklch(0.62 0.11 78);
+  --sidebar-primary-foreground: oklch(0.99 0 0);
+  --sidebar-accent:        oklch(0.96 0.02 85);
+  --sidebar-accent-foreground: oklch(0.18 0.02 85);
+  --sidebar-border:        oklch(0.92 0.01 85);
+  --sidebar-ring:          oklch(0.62 0.11 78);
+
+  /* Opaque surfaces for portaled menus (Select, notifications) — no alpha */
+  --dropdown-menu:        #ffffff;
+  --dropdown-menu-header: #f4f4f5;
+
+  /* Scrollbar */
+  --scrollbar-track:       oklch(0.96 0.01 250);
+  --scrollbar-thumb:       oklch(0.8 0 0);
+  --scrollbar-thumb-hover: oklch(0.7 0 0);
+
+  font-family: var(--font-jakarta), var(--font-cairo), sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  /*
+    CRITICAL: Forces the browser to use light-mode native controls (date pickers,
+    scrollbars, form elements) even when the phone's OS is in dark mode.
+    'only light' explicitly tells Android/MIUI NOT to apply Force Dark Mode.
+  */
+  color-scheme: only light;
+}
+
+html[dir="rtl"] {
+  font-size: 15px;
+}
+
+* {
+  font-family: inherit;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Dark theme — true-black + gold accent.
+   Only activated by .dark class on <html> (set by applyTheme()).
+   color-scheme: dark  →  native controls use dark rendering.
+───────────────────────────────────────────────────────────── */
+.dark {
+  --background:            oklch(0.065 0 0);
+  --foreground:            oklch(0.98 0 0);
+  --card:                  oklch(0.1 0 0);
+  --card-foreground:       oklch(0.98 0 0);
+  --popover:               oklch(0.11 0 0);
+  --popover-foreground:    oklch(0.98 0 0);
+  --primary:               oklch(0.98 0 0);
+  --primary-foreground:    oklch(0.06 0 0);
+  --secondary:             oklch(0.62 0.11 78);
+  --secondary-foreground:  oklch(0.99 0 0);
+  --muted:                 oklch(0.14 0 0);
+  --muted-foreground:      oklch(0.62 0.02 85);
+  --accent:                oklch(0.15 0 0);
+  --accent-foreground:     oklch(0.98 0 0);
+  --destructive:           oklch(0.58 0.2 25);
+  --border:                oklch(0.98 0 0 / 8%);
+  --input:                 oklch(0.98 0 0 / 10%);
+  --ring:                  oklch(0.62 0.11 78);
+  --chart-1:               oklch(0.68 0.12 78);
+  --chart-2:               oklch(0.55 0.1 78);
+  --chart-3:               oklch(0.72 0.1 72);
+  --chart-4:               oklch(0.48 0.08 75);
+  --chart-5:               oklch(0.78 0.08 78);
+  --sidebar:               oklch(0.045 0 0);
+  --sidebar-foreground:    oklch(0.98 0 0);
+  --sidebar-primary:       oklch(0.62 0.11 78);
+  --sidebar-primary-foreground: oklch(0.99 0 0);
+  --sidebar-accent:        oklch(0.11 0 0);
+  --sidebar-accent-foreground: oklch(0.98 0 0);
+  --sidebar-border:        oklch(0.98 0 0 / 7%);
+  --sidebar-ring:          oklch(0.62 0.11 78);
+  --dropdown-menu:        #161618;
+  --dropdown-menu-header: #1c1c1f;
+
+  --scrollbar-track:       oklch(0.07 0 0);
+  --scrollbar-thumb:       oklch(0.4 0 0);
+  --scrollbar-thumb-hover: oklch(0.5 0 0);
+
+  /* Update sira brand tokens for dark surfaces */
+  --color-sira-bg-card: var(--card);
+
+  color-scheme: dark;
+}
+
+/*
+  ─────────────────────────────────────────────────────────────
+  FAILSAFE: Phone OS is in dark mode but the user has NOT
+  enabled dark mode in the app (.dark class is absent).
+  Force ALL CSS variables back to light values so the browser
+  cannot auto-apply its own dark palette.
+  This ensures light mode is truly the default on every device.
+  ─────────────────────────────────────────────────────────────
+*/
+@media (prefers-color-scheme: dark) {
+  html:not(.dark) {
+    --background:            oklch(0.955 0.008 85);
+    --foreground:            oklch(0.18 0.02 85);
+    --card:                  oklch(1 0 0);
+    --card-foreground:       oklch(0.18 0.02 85);
+    --popover:               oklch(1 0 0);
+    --popover-foreground:    oklch(0.18 0.02 85);
+    --primary:               oklch(0.18 0.02 85);
+    --primary-foreground:    oklch(0.99 0 0);
+    --secondary:             oklch(0.62 0.11 78);
+    --secondary-foreground:  oklch(0.99 0 0);
+    --muted:                 oklch(0.94 0.012 85);
+    --muted-foreground:      oklch(0.48 0.02 85);
+    --accent:                oklch(0.96 0.02 78);
+    --accent-foreground:     oklch(0.18 0.02 85);
+    --destructive:           oklch(0.55 0.22 25);
+    --border:                oklch(0.9 0.01 85);
+    --input:                 oklch(0.9 0.01 85);
+    --ring:                  oklch(0.62 0.11 78);
+    --chart-1:               oklch(0.62 0.11 78);
+    --chart-2:               oklch(0.48 0.08 75);
+    --chart-3:               oklch(0.35 0.04 85);
+    --chart-4:               oklch(0.72 0.1 72);
+    --chart-5:               oklch(0.55 0.1 78);
+    --sidebar:               oklch(1 0 0);
+    --sidebar-foreground:    oklch(0.18 0.02 85);
+    --sidebar-primary:       oklch(0.62 0.11 78);
+    --sidebar-primary-foreground: oklch(0.99 0 0);
+    --sidebar-accent:        oklch(0.96 0.02 85);
+    --sidebar-accent-foreground: oklch(0.18 0.02 85);
+    --sidebar-border:        oklch(0.92 0.01 85);
+    --sidebar-ring:          oklch(0.62 0.11 78);
+    --dropdown-menu:        #ffffff;
+    --dropdown-menu-header: #f4f4f5;
+    --scrollbar-track:       oklch(0.96 0.01 250);
+    --scrollbar-thumb:       oklch(0.8 0 0);
+    --scrollbar-thumb-hover: oklch(0.7 0 0);
+    /* Force light native controls */
+    color-scheme: only light;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Base layer
+───────────────────────────────────────────────────────────── */
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+
+  html {
+    @apply font-sans;
+  }
+
+  html[dir="rtl"] body,
+  html[dir="rtl"] input,
+  html[dir="rtl"] textarea,
+  html[dir="rtl"] button,
+  html[dir="rtl"] select {
+    font-family: 'Inter', 'Cairo', sans-serif;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Global layout
+───────────────────────────────────────────────────────────── */
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+#root {
+  margin: 0 auto;
+  padding: 0;
+  box-sizing: border-box;
+  min-height: 100vh;
+  background-color: var(--background);
+}
+
+h1 {
+  font-size: 1.75rem;
+  line-height: 1.15;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Components
+───────────────────────────────────────────────────────────── */
+@layer components {
+
+  /* Shared CRM modal theme — always light surfaces */
+  .modal-backdrop-scrim {
+    @apply backdrop-blur-sm bg-slate-600/35;
+  }
+
+  .crm-modal-scope .modal-surface {
+    background-color: #ffffff !important;
+    color: #0b1828;
+  }
+
+  .modal-surface {
+    @apply bg-white;
+  }
+
+  .modal-label {
+    @apply mb-1.5 block text-start text-[12px] font-black uppercase tracking-widest text-slate-500;
+  }
+
+  .modal-input {
+    @apply h-12 w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-bold leading-normal text-slate-900 shadow-sm outline-none transition-all placeholder:text-slate-500 focus:border-black focus:ring-2 focus:ring-black/20 focus-visible:border-black focus-visible:ring-2 focus-visible:ring-black/20;
+  }
+
+  .modal-input-icon {
+    @apply pointer-events-none absolute top-1/2 h-4 w-4 -translate-y-1/2 text-[#0B1828]/40;
+  }
+
+  .modal-textarea {
+    @apply min-h-[120px] w-full resize-y rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-bold leading-relaxed text-slate-900 shadow-sm outline-none transition-all placeholder:text-slate-500 focus:border-[#0B1828]/25 focus:ring-2 focus:ring-[#0B1828]/10;
+  }
+
+  .modal-field-select {
+    @apply h-12 w-full rounded-2xl border border-slate-200 bg-white px-4 text-start text-sm font-bold leading-normal text-slate-900 shadow-sm outline-none transition placeholder:text-slate-500 focus:border-[#0B1828]/25 focus:ring-2 focus:ring-[#0B1828]/10;
+  }
+
+  .modal-agent-bar {
+    @apply flex items-center gap-4 rounded-2xl border border-slate-200 bg-white px-5 py-4;
+  }
+
+  .modal-agent-caption {
+    @apply text-[10px] font-black uppercase tracking-widest text-slate-500;
+  }
+
+  .modal-agent-name {
+    @apply truncate text-sm font-black text-[#0B1828];
+  }
+
+  .modal-segment {
+    @apply flex flex-wrap gap-2;
+  }
+
+  .modal-segment-btn {
+    @apply min-h-[2.9rem] flex-1 rounded-2xl border px-3 py-2.5 text-center text-[12px] font-black uppercase tracking-widest leading-snug transition-all sm:px-4;
+  }
+
+  .modal-segment-btn-active {
+    @apply border-[#0B1828] bg-[#0B1828] text-white shadow-md;
+  }
+
+  .modal-segment-btn-idle {
+    @apply border-slate-200 bg-white text-slate-700 shadow-sm hover:border-slate-300 hover:bg-slate-50;
+  }
+
+  .modal-btn-primary {
+    @apply inline-flex w-full items-center justify-center gap-2 rounded-2xl border border-[#0B1828] bg-[#0B1828] px-5 py-3.5 text-xs font-black uppercase tracking-widest leading-tight text-white shadow-lg shadow-[#0B1828]/10 transition-all hover:bg-slate-800 active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .modal-btn-secondary {
+    @apply inline-flex w-full items-center justify-center rounded-2xl border border-slate-200 bg-white px-5 py-3.5 text-xs font-black uppercase tracking-widest text-slate-600 transition-colors hover:bg-slate-50;
+  }
+
+  .modal-btn-danger {
+    @apply inline-flex w-full items-center justify-center gap-2 rounded-2xl border border-red-700 bg-red-600 px-5 py-3.5 text-xs font-black uppercase tracking-widest leading-tight text-white shadow-lg shadow-red-700/20 transition-all hover:bg-red-700 active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .modal-cancel-link {
+    @apply block w-full pt-1 text-center text-xs font-black uppercase tracking-widest text-slate-500 underline-offset-4 transition-colors hover:text-[#0B1828];
+  }
+
+  .modal-pill {
+    @apply rounded-full border px-4 py-2 text-center text-[10px] font-black uppercase tracking-widest transition-all;
+  }
+
+  .modal-pill-active {
+    @apply border-[#0B1828] bg-[#0B1828] text-white shadow-md;
+  }
+
+  .modal-pill-idle {
+    @apply border-slate-200 bg-white text-[#0B1828] hover:border-slate-300;
+  }
+
+  .modal-actions-stack {
+    @apply flex flex-col gap-3 border-t border-slate-200/80 pt-6;
+  }
+
+  .modal-card-inset {
+    @apply rounded-2xl border border-slate-200/80 bg-white p-4 shadow-[0_1px_0_rgba(15,23,42,0.04)];
+  }
+
+  /* Native selects / date inputs: solid surface + correct system dropdown for light/dark */
+  .native-control {
+    @apply w-full rounded-2xl border-2 border-border bg-muted/20 px-4 py-3 text-sm font-medium text-foreground transition-colors;
+    @apply hover:bg-muted/40 focus:outline-none focus:border-secondary focus:ring-2 focus:ring-ring/35;
+    color-scheme: light;
+  }
+
+  .dark .native-control {
+    color-scheme: dark;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Utilities
+───────────────────────────────────────────────────────────── */
+@layer utilities {
+  /* Remove gradient text styling globally (page headings / labels). */
+  .bg-clip-text.text-transparent {
+    background-image: none !important;
+    color: var(--foreground) !important;
+    -webkit-text-fill-color: currentColor;
+  }
+
+  h1.bg-clip-text,
+  h2.bg-clip-text,
+  .modal-title.bg-clip-text {
+    background-image: none !important;
+    color: var(--foreground) !important;
+    -webkit-text-fill-color: currentColor !important;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Toastify — always above modals / drawers / bulk bars
+───────────────────────────────────────────────────────────── */
+:root {
+  --toastify-z-index: 2147483000;
+}
+
+.Toastify__toast-container {
+  z-index: 2147483646 !important;
+  -webkit-transform: translate3d(0, 0, 0) !important;
+}
+
+.Toastify__toast-container--top-center,
+.Toastify__toast-container--bottom-center {
+  transform: translateX(-50%) !important;
+}
+
+.Toastify__toast {
+  z-index: 2147483646 !important;
+  position: relative;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Global Scrollbar Styling
+───────────────────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: oklch(0.9 0 0);
+  border-radius: 100px;
+  border: 1px solid transparent;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: oklch(0.85 0 0);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: oklch(0.9 0 0) transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: oklch(0.9 0 0);
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: oklch(0.85 0 0);
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   RTL / Arabic font overrides
+───────────────────────────────────────────────────────────── */
+html[dir="rtl"],
+html:lang(ar) {
+  font-size: inherit;
+}
+
+/* Leads: keep date range fields visually aligned with LTR */
+html[dir="rtl"] input.leads-date-filter[type="date"] {
+  font-size: 10px;
+  line-height: 1.2;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   SIRA Toast (Sonner) — premium dark style
+───────────────────────────────────────────────────────────── */
+[data-sonner-toaster] {
+  --normal-bg: #0B1828;
+  --normal-border: rgba(255,255,255,0.08);
+  --normal-text: #ffffff;
+}
+
+[data-sonner-toast] {
+  font-family: inherit !important;
+  border-radius: 16px !important;
+  font-weight: 700 !important;
+  font-size: 13px !important;
+  gap: 10px !important;
+  padding: 14px 16px !important;
+  backdrop-filter: blur(12px);
+}
+
+/* Default / base */
+[data-sonner-toast][data-type="default"],
+[data-sonner-toast]:not([data-type]) {
+  background: #0B1828 !important;
+  border: 1px solid rgba(255,255,255,0.1) !important;
+  color: #fff !important;
+}
+
+/* Success */
+[data-sonner-toast][data-type="success"] {
+  background: #052e16 !important;
+  border: 1px solid #16a34a !important;
+  color: #bbf7d0 !important;
+}
+
+[data-sonner-toast][data-type="success"] [data-icon] svg {
+  color: #4ade80 !important;
+}
+
+/* Error */
+[data-sonner-toast][data-type="error"] {
+  background: #2d0a0a !important;
+  border: 1px solid #dc2626 !important;
+  color: #fecaca !important;
+}
+
+[data-sonner-toast][data-type="error"] [data-icon] svg {
+  color: #f87171 !important;
+}
+
+/* Info */
+[data-sonner-toast][data-type="info"] {
+  background: #0c1a3b !important;
+  border: 1px solid #3b82f6 !important;
+  color: #bfdbfe !important;
+}
+
+[data-sonner-toast][data-type="info"] [data-icon] svg {
+  color: #60a5fa !important;
+}
+
+/* Warning */
+[data-sonner-toast][data-type="warning"] {
+  background: #2d1a00 !important;
+  border: 1px solid #d97706 !important;
+  color: #fde68a !important;
+}
+
+[data-sonner-toast][data-type="warning"] [data-icon] svg {
+  color: #fbbf24 !important;
+}
+
+/* Title */
+[data-sonner-toast] [data-title] {
+  font-weight: 800 !important;
+  font-size: 13px !important;
+}
+
+/* Close button */
+[data-sonner-toast] [data-close-button] {
+  border-radius: 8px !important;
+  background: rgba(255,255,255,0.1) !important;
+  border: none !important;
+  color: rgba(255,255,255,0.6) !important;
+}
+
+[data-sonner-toast] [data-close-button]:hover {
+  background: rgba(255,255,255,0.2) !important;
+}
+
+/* Progress bar */
+[data-sonner-toast] [data-sonner-bar] {
+  border-radius: 0 0 16px 16px !important;
+  height: 3px !important;
+  opacity: 0.4;
+}

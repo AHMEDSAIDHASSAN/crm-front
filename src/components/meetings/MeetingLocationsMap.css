@@ -1,0 +1,5 @@
+/* Leaflet wraps divIcon in .leaflet-div-icon with white background — hide it so custom dots show. */
+.leaflet-div-icon.meeting-map-role-icon {
+    background: transparent !important;
+    border: none !important;
+}

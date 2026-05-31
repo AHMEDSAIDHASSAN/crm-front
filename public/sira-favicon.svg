@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#E8C46A"/>
+      <stop offset="50%" stop-color="#BF9B30"/>
+      <stop offset="100%" stop-color="#9A7B20"/>
+    </linearGradient>
+  </defs>
+  <!-- Dark navy background -->
+  <rect width="32" height="32" rx="6" fill="#0B1828"/>
+  <!-- S-building mark: top-left vertical + top chevron -->
+  <polygon points="7,26 7,13 11,7 15,7 11,13 11,26" fill="url(#g)"/>
+  <!-- Top diagonal bar (upper chevron) -->
+  <polygon points="11,7 22,4 24,7 13,10" fill="url(#g)"/>
+  <!-- Middle connector diagonal -->
+  <polygon points="11,15 24,11 24,14 11,18" fill="url(#g)"/>
+  <!-- Bottom diagonal bar -->
+  <polygon points="11,20 24,16 26,19 13,23" fill="url(#g)"/>
+  <!-- Bottom-right vertical -->
+  <polygon points="22,19 26,19 26,27 22,27" fill="url(#g)"/>
+</svg>

@@ -1,0 +1,245 @@
+/*
+  App.css — intentionally minimal.
+  All theme tokens, dark-mode config, and component styles live in index.css
+  to ensure a single Tailwind processing pass and prevent OS color-scheme leakage.
+*/
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+/* Leads page date filters — keep native picker but theme trigger/icon */
+.leads-date-input {
+  color-scheme: light;
+}
+
+.leads-date-input::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  opacity: 0.85;
+  filter: invert(12%) sepia(18%) saturate(1434%) hue-rotate(177deg) brightness(93%) contrast(96%);
+}
+
+/* Leads range picker (react-day-picker) themed to SIRA style */
+.leads-range-calendar {
+  --rdp-cell-size: 24px;
+  --rdp-accent-color: #0b1828;
+  --rdp-background-color: #eceff5;
+  margin: 0;
+  font-size: 10px;
+}
+
+.leads-range-calendar .rdp-months {
+  justify-content: center;
+}
+
+.leads-range-calendar .rdp-month {
+  width: 100%;
+}
+
+.leads-range-calendar .rdp-month_grid {
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+}
+
+.leads-range-calendar .rdp-day {
+  padding: 0 !important;
+}
+
+.leads-range-calendar .rdp-caption_label {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: #0b1828;
+}
+
+.leads-range-calendar .rdp-weekday {
+  font-size: 9px;
+  font-weight: 800;
+  color: #4b5563;
+}
+
+.leads-range-calendar .rdp-day_button {
+  font-size: 10px;
+  font-weight: 800;
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  color: #0b1828 !important;
+  transition: background-color 180ms ease, color 180ms ease, box-shadow 220ms ease, transform 180ms ease;
+}
+
+.leads-range-calendar .rdp-day_button:hover:not([disabled]) {
+  background: #edf1f7;
+  transform: translateY(-1px);
+}
+
+.leads-range-calendar .rdp-day_range_start .rdp-day_button,
+.leads-range-calendar .rdp-range_start .rdp-day_button,
+.leads-range-calendar .rdp-day_range_end .rdp-day_button,
+.leads-range-calendar .rdp-range_end .rdp-day_button {
+  color: #ffffff !important;
+  background: #0b1828 !important;
+  border-color: #0b1828 !important;
+  box-shadow: 0 6px 14px rgba(11, 24, 40, 0.28) !important;
+}
+
+/* Single-day selection (when from===to) keeps black selected day */
+.leads-range-calendar .rdp-day_selected:not(.rdp-day_range_middle):not(.rdp-day_range_start):not(.rdp-day_range_end) .rdp-day_button,
+.leads-range-calendar .rdp-selected:not(.rdp-range_middle):not(.rdp-range_start):not(.rdp-range_end) .rdp-day_button {
+  color: #ffffff !important;
+  background: #0b1828 !important;
+  border-color: #0b1828 !important;
+  box-shadow: 0 6px 14px rgba(11, 24, 40, 0.28) !important;
+}
+
+.leads-range-calendar .rdp-day_range_middle,
+.leads-range-calendar .rdp-range_middle {
+  background: linear-gradient(180deg, #eff2f7 0%, #eceff5 100%) !important;
+  border-radius: 0 !important;
+  transition: background-color 180ms ease;
+}
+
+.leads-range-calendar .rdp-day_range_middle .rdp-day_button,
+.leads-range-calendar .rdp-range_middle .rdp-day_button {
+  background: transparent !important;
+  color: #0b1828 !important;
+  border-color: transparent !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.leads-range-calendar .rdp-day_range_start,
+.leads-range-calendar .rdp-range_start,
+.leads-range-calendar .rdp-day_range_end,
+.leads-range-calendar .rdp-range_end {
+  background: linear-gradient(180deg, #eff2f7 0%, #eceff5 100%) !important;
+  border-radius: 0 !important;
+}
+
+.leads-range-calendar .rdp-day_range_start,
+.leads-range-calendar .rdp-range_start {
+  border-radius: 999px 0 0 999px !important;
+}
+
+.leads-range-calendar .rdp-day_range_end,
+.leads-range-calendar .rdp-range_end {
+  border-radius: 0 999px 999px 0 !important;
+}
+
+html[dir="rtl"] .leads-range-calendar .rdp-day_range_start,
+html[dir="rtl"] .leads-range-calendar .rdp-range_start {
+  border-radius: 0 999px 999px 0 !important;
+}
+
+html[dir="rtl"] .leads-range-calendar .rdp-day_range_end,
+html[dir="rtl"] .leads-range-calendar .rdp-range_end {
+  border-radius: 999px 0 0 999px !important;
+}
+
+.leads-range-calendar .rdp-range_middle .rdp-day_button:hover:not([disabled]),
+.leads-range-calendar .rdp-day_range_middle .rdp-day_button:hover:not([disabled]) {
+  transform: none;
+  background: transparent !important;
+}
+
+.leads-range-calendar .rdp-day_button:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(11, 24, 40, 0.18);
+}
+
+/* Prevent phantom range blocks on hidden/outside placeholders */
+.leads-range-calendar .rdp-hidden,
+.leads-range-calendar .rdp-outside {
+  background: transparent !important;
+}
+
+.leads-range-calendar .rdp-caption {
+  padding-top: 0.1rem;
+}
+
+.leads-range-calendar .rdp-dropdowns {
+  display: inline-flex;
+  gap: 0.35rem;
+  align-items: center;
+}
+
+.leads-range-calendar .rdp-dropdown {
+  position: relative;
+}
+
+.leads-range-calendar .rdp-dropdown select {
+  min-width: 84px;
+  height: 24px;
+  border-radius: 999px;
+  border: 1px solid #e2e8f0;
+  background: #fff;
+  color: #0b1828;
+  font-size: 9px;
+  font-weight: 800;
+  padding: 0 22px 0 10px;
+  outline: none;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+  appearance: none;
+}
+
+.leads-range-calendar .rdp-dropdown::after {
+  content: "";
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  width: 6px;
+  height: 6px;
+  border-right: 2px solid #0b1828;
+  border-bottom: 2px solid #0b1828;
+  transform: translateY(-60%) rotate(45deg);
+  pointer-events: none;
+}
+
+.leads-range-calendar .rdp-dropdown select:focus {
+  border-color: #0b1828;
+  box-shadow: 0 0 0 2px rgba(11, 24, 40, 0.18);
+}
+
+.leads-range-calendar .rdp-nav_button,
+.leads-range-calendar .rdp-button_previous,
+.leads-range-calendar .rdp-button_next,
+.leads-range-calendar .rdp-chevron {
+  color: #0b1828 !important;
+  fill: #0b1828 !important;
+  stroke: #0b1828 !important;
+}
