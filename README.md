@@ -1,73 +1,69 @@
-# React + TypeScript + Vite
+# SIRA CRM — Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React 19 + TypeScript + Vite + Tailwind CSS
 
-Currently, two official plugins are available:
+## متطلبات التشغيل
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Node.js 18+
+- الـ Backend شغال على port 2003
 
-## React Compiler
+## خطوات الإعداد
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### 1. تحميل المتطلبات
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### 2. إعداد ملف البيئة (اختياري)
+الـ frontend بيتوصل بالـ backend تلقائياً على `localhost:2003`.
+لو الـ backend على سيرفر تاني:
+```bash
+# أنشئ ملف .env.local
+VITE_API_PROXY_TARGET=http://YOUR_SERVER_IP:2003
 ```
+
+### 3. تشغيل الـ Frontend
+```bash
+# Development
+npm run dev
+```
+الـ frontend بيشتغل على **port 5173**.
+
+### 4. Build للـ Production
+```bash
+npm run build
+```
+
+---
+
+## الـ Admin الافتراضي
+
+```
+Email: admin@sira.com
+Password: Admin123!
+```
+
+---
+
+## الصفحات الرئيسية
+
+| الصفحة | الوصف |
+|--------|--------|
+| `/dashboard` | لوحة التحكم |
+| `/leads` | إدارة الليدز |
+| `/units` | الوحدات العقارية |
+| `/meetings` | الاجتماعات |
+| `/sales-assistant` | مساعد المبيعات والحاسبة |
+| `/settings/whatsapp-connect` | ربط WhatsApp |
+| `/whatsapp-broadcast` | إرسال واتساب جماعي |
+
+---
+
+## الأدوار
+
+| الدور | الصلاحيات |
+|-------|-----------|
+| `super_admin` | كل الصلاحيات |
+| `operation_manager` | تعيين ليدز للمبيعات |
+| `sales_manager` | إدارة الفرق |
+| `sales` | متابعة الليدز الخاصة به |
