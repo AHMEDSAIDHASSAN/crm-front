@@ -820,7 +820,10 @@ function SalesTab() {
             setEmployees(d.employees ?? []);
             setCommRates(rates.filter((r: any) => r.isActive));
         }
-        catch { toast.error('فشل تحميل بيانات المبيعات'); }
+        catch (e: any) {
+            const msg = e?.response?.data?.message || e?.message || '';
+            toast.error(msg ? `فشل تحميل البيانات: ${msg}` : 'فشل تحميل بيانات المبيعات');
+        }
         finally { setLoading(false); }
     }, []);
 
