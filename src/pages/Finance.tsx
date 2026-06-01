@@ -1059,25 +1059,27 @@ export default function Finance() {
 
     if (!canAccess) return null;
 
+    const isRtl = lang.startsWith('ar');
+
     const tabs: { id: Tab; label: string; icon: any }[] = [
-        { id: 'dashboard', label: 'لوحة المالية', icon: LayoutDashboard },
-        { id: 'payroll', label: 'المرتبات', icon: Banknote },
-        { id: 'transactions', label: 'المصروفات والإيرادات', icon: Receipt },
-        { id: 'fixed-bills', label: 'الفواتير الثابتة', icon: CreditCard },
-        { id: 'commission-rates', label: 'معدلات العمولات', icon: Percent },
-        { id: 'sales', label: 'فريق المبيعات', icon: TrendingUp },
+        { id: 'dashboard', label: t('finance.tabDashboard'), icon: LayoutDashboard },
+        { id: 'payroll', label: t('finance.tabPayroll'), icon: Banknote },
+        { id: 'transactions', label: t('finance.tabTransactions'), icon: Receipt },
+        { id: 'fixed-bills', label: t('finance.tabFixedBills'), icon: CreditCard },
+        { id: 'commission-rates', label: t('finance.tabCommissionRates'), icon: Percent },
+        { id: 'sales', label: t('finance.tabSales'), icon: TrendingUp },
     ];
 
     return (
-        <div className="min-h-screen bg-sira-bg-page p-4 md:p-8 space-y-6" dir="rtl">
+        <div className="min-h-screen bg-sira-bg-page p-4 md:p-8 space-y-6" dir={isRtl ? 'rtl' : 'ltr'}>
             {/* Header */}
             <div className="flex items-center gap-4">
                 <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-sira-gold text-white shadow-lg shadow-sira-gold/30">
                     <Wallet className="h-6 w-6" />
                 </div>
                 <div>
-                    <p className="text-[10px] font-black uppercase tracking-[0.3em] text-sira-text-muted">إدارة مالية</p>
-                    <h1 className="text-2xl font-black text-sira-text-primary">الفايننس</h1>
+                    <p className="text-[10px] font-black uppercase tracking-[0.3em] text-sira-text-muted">{t('finance.pageSubtitle')}</p>
+                    <h1 className="text-2xl font-black text-sira-text-primary">{t('finance.pageTitle')}</h1>
                 </div>
             </div>
 

@@ -2626,12 +2626,12 @@ export default function Leads() {
                 {/* Floating Bulk Action Bar */}
                 {selectedLeadIds.length > 0 && !isBulkModalOpen && (
                         <div
-                            className="fixed bottom-4 left-2 right-2 md:bottom-8 md:left-0 md:right-[280px] z-50 flex justify-center pointer-events-none animate-in slide-in-from-bottom-4 fade-in duration-200"
+                            className={`fixed bottom-6 left-4 right-4 md:bottom-10 z-50 flex justify-center pointer-events-none animate-in slide-in-from-bottom-4 fade-in duration-200 ${isRtl ? 'md:left-4 md:right-[300px]' : 'md:right-4 md:left-[300px]'}`}
                         >
-                        <div className="no-scrollbar pointer-events-auto flex w-full max-w-[96vw] items-center gap-2 overflow-x-auto rounded-[1.5rem] border border-slate-200 bg-white px-3 py-3 text-[#0B1828] shadow-[0_20px_50px_rgba(11,24,40,0.15)] md:w-auto md:max-w-none md:gap-10 md:rounded-[2rem] md:px-12 md:py-5"
+                        <div className="no-scrollbar pointer-events-auto flex w-full max-w-[96vw] items-center gap-2 overflow-x-auto rounded-[1.5rem] border border-slate-200 bg-white px-3 py-2 text-[#0B1828] shadow-[0_20px_50px_rgba(11,24,40,0.15)] md:w-auto md:max-w-none md:gap-6 md:rounded-[1.5rem] md:px-8 md:py-3"
                         >
                             <div className="flex shrink-0 items-center gap-2 border-e border-slate-200 pe-3 md:gap-5 md:pe-10">
-                                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-slate-50 text-base font-black italic text-[#0B1828] shadow-sm md:h-14 md:w-14 md:rounded-2xl md:text-2xl">
+                                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-slate-50 text-sm font-black italic text-[#0B1828] shadow-sm md:h-10 md:w-10 md:rounded-xl md:text-lg">
                                     {selectedLeadIds.length}
                                 </div>
                                 <div className="min-w-0 text-start">
