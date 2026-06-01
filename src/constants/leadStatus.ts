@@ -14,6 +14,7 @@ export const LEAD_STATUS_ENUM_VALUES = [
     'follow_up',
     'qualified',
     'no_answer',
+    'no_answer_first_call',
     'wrong_number',
     'not_interested',
     'switched_off',
@@ -37,6 +38,7 @@ export type LeadStatusEnum = (typeof LEAD_STATUS_ENUM_VALUES)[number];
  */
 export const LEADS_PAGE_STATUS_FILTERS: readonly LeadStatusEnum[] = [
     'no_answer',
+    'no_answer_first_call',
     'switched_off',
     'follow_up',
     'cold_call',
@@ -57,6 +59,7 @@ export const LEADS_PAGE_STATUS_FILTERS: readonly LeadStatusEnum[] = [
  */
 export const FEEDBACK_GRID_ORDER: readonly LeadStatusEnum[] = [
     'no_answer',
+    'no_answer_first_call',
     'switched_off',
     'follow_up',
     'cold_call',

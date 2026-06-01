@@ -45,7 +45,8 @@ const FEEDBACK_GRID_FALLBACK: Record<string, { colorClass: string; icon: ReactNo
 export function feedbackTileClasses(value: string): { idle: string; active: string; iconIdle: string; iconActive: string } {
     const map: Record<string, { idle: string; active: string; iconIdle: string; iconActive: string }> = {
         wrong_number:      { idle: 'bg-white border-red-100 text-red-600',     active: 'bg-red-500 border-red-600 text-white',     iconIdle: 'bg-red-50',     iconActive: 'bg-red-400/30' },
-        no_answer:         { idle: 'bg-white border-slate-200 text-slate-500',  active: 'bg-slate-600 border-slate-700 text-white',  iconIdle: 'bg-slate-100',  iconActive: 'bg-white/20' },
+        no_answer:             { idle: 'bg-white border-slate-200 text-slate-500',  active: 'bg-slate-600 border-slate-700 text-white',  iconIdle: 'bg-slate-100',  iconActive: 'bg-white/20' },
+        no_answer_first_call:  { idle: 'bg-white border-slate-200 text-slate-400',  active: 'bg-slate-500 border-slate-600 text-white',  iconIdle: 'bg-slate-50',   iconActive: 'bg-white/20' },
         follow_up:         { idle: 'bg-white border-amber-100 text-amber-600',  active: 'bg-amber-500 border-amber-600 text-white',  iconIdle: 'bg-amber-50',   iconActive: 'bg-amber-400/30' },
         rotation:          { idle: 'bg-white border-violet-100 text-violet-600',active: 'bg-violet-600 border-violet-700 text-white',iconIdle: 'bg-violet-50',  iconActive: 'bg-white/20' },
         cold_call:         { idle: 'bg-white border-cyan-100 text-cyan-600',    active: 'bg-cyan-600 border-cyan-700 text-white',    iconIdle: 'bg-cyan-50',    iconActive: 'bg-white/20' },
