@@ -66,42 +66,30 @@ api.interceptors.request.use(
     const isAuthFreeCall = isLoginCall || isRegisterCall;
     const token = localStorage.getItem("token");
     if (!isAuthFreeCall && isJwtExpired(token)) {
-      console.warn('[API REQUEST] Session expired before request. Forcing logout...');
       forceClientLogout();
       return Promise.reject(new Error('SESSION_EXPIRED'));
     }
     if (!isAuthFreeCall && token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
-    console.log(`[API REQUEST] ${config.method?.toUpperCase()} ${config.url}`, config.params || '');
     return config;
   },
-  (error) => {
-    console.error('[API REQUEST ERROR]', error);
-    return Promise.reject(error);
-  }
+  (error) => Promise.reject(error)
 );
 
 api.interceptors.response.use(
-  (response) => {
-    console.log(`[API RESPONSE] ${response.status} ${response.config.url}`);
-    return response;
-  },
+  (response) => response,
   (error) => {
     const status = error.response?.status;
     const rawUrl = String(error.config?.url ?? "");
     const method = String(error.config?.method ?? "get").toLowerCase();
-    /** Wrong password on login — not a destroyed session; avoid clearing state / hard redirect. */
     const isLoginFailure = status === 401 && method === "post" && rawUrl.includes("/auth/login");
-    /** Signing out may 401 on some setups; client cleanup runs in UI — do not treat as session expiry. */
     const isLogoutCall = method === "post" && rawUrl.includes("/auth/logout");
 
     if (status === 401 && !isLoginFailure && !isLogoutCall) {
-      console.warn('[API 401] Token expired or invalid. Logging out...');
       forceClientLogout();
     }
 
-    console.error(`[API RESPONSE ERROR] ${error.response?.status} ${error.config?.url}`, error.response?.data);
     return Promise.reject(error);
   }
 );
