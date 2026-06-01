@@ -24,3 +24,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Old backend (not part of frontend)
+sira-backend-master 2/
